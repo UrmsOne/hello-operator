@@ -1,0 +1,20 @@
+# permissions for end users to view helloservices.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: helloservice-viewer-role
+rules:
+- apiGroups:
+  - hello.urmsone.com
+  resources:
+  - helloservices
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - hello.urmsone.com
+  resources:
+  - helloservices/status
+  verbs:
+  - get

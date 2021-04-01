@@ -1,0 +1,24 @@
+# permissions for end users to edit helloservices.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: helloservice-editor-role
+rules:
+- apiGroups:
+  - hello.urmsone.com
+  resources:
+  - helloservices
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - hello.urmsone.com
+  resources:
+  - helloservices/status
+  verbs:
+  - get

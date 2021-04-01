@@ -1,0 +1,9 @@
+apiVersion: hello.urmsone.com/v1beta1
+kind: HelloService
+metadata:
+  name: helloservice-sample
+spec:
+  # Add fields here
+  replicas: 2
+  port: 80
+  image: echoserver:test1

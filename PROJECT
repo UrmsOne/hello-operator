@@ -1,0 +1,11 @@
+domain: urmsone.com
+layout: go.kubebuilder.io/v2
+projectName: hello-operator
+repo: hello-operator
+resources:
+- group: hello
+  kind: HelloService
+  version: v1beta1
+version: 3-alpha
+plugins:
+  go.sdk.operatorframework.io/v2-alpha: {}
