@@ -5,6 +5,7 @@ kind: CustomResourceDefinition
 metadata:
   name: helloservices.hello.urmsone.com
 spec:
+  preserveUnknownFields: false
   conversion:
     strategy: Webhook
     webhookClientConfig:

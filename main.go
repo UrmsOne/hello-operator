@@ -18,9 +18,11 @@ package main
 
 import (
 	"flag"
+	"os"
+	"sigs.k8s.io/controller-runtime/pkg/healthz"
+
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/tools/record"
-	"os"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
@@ -88,7 +90,20 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "HelloService")
 		os.Exit(1)
 	}
+	if err = (&hellov1beta1.HelloService{}).SetupWebhookWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create webhook", "webhook", "HelloService")
+		os.Exit(1)
+	}
 	// +kubebuilder:scaffold:builder
+
+	if err := mgr.AddHealthzCheck("health", healthz.Ping); err != nil {
+		setupLog.Error(err, "unable to set up health check")
+		os.Exit(1)
+	}
+	if err := mgr.AddReadyzCheck("check", healthz.Ping); err != nil {
+		setupLog.Error(err, "unable to set up ready check")
+		os.Exit(1)
+	}
 
 	setupLog.Info("starting manager")
 	if err := mgr.Start(ctrl.SetupSignalHandler()); err != nil {
